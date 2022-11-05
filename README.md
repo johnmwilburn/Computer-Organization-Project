@@ -1,10 +1,12 @@
-** TO USE:
+## TO USE:
+# Cloning
 * Create a folder named C:\Projects
 * Open CMD
 * type 'cd C:\Projects'
 * type 'git clone https://github.com/johnmwilburn/Computer-Organization-Project'
 * [Make your git credentials work somehow until the clone works properly.]
 
+# Configuration
 * Open the cloned solution file with Visual Studio 2019
 * Go to Project > ComporgProject Properties > Debugging > Command Arguments
 * Ensure that the first option is set to -d or -e depending on if you want to decrypt or encrypt
