@@ -1,1 +1,2 @@
 C:\Projects\Comporg-Project\ComporgProject\Debug\ComporgProject.exe
+C:\Projects\Computer-Organization-Project\ComporgProject\Debug\ComporgProject.exe
