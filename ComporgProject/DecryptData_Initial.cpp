@@ -41,9 +41,9 @@ void decryptData_01(char *data, int sized)
 		mov bl, al
 
 		// (#C) nibble rotate right 1 
-		mov al, bl
+		mov dl, bl
 		and bl, 0x0f  // bl now contains lower half of its original bits
-		and dl, 0xf0  // al now contains upper half of bl's original bits
+		and dl, 0xf0  // dl now contains upper half of bl's original bits
 		// rotate upper nibble right 1
 		shr dl, 4
 		rcr dl, 1

@@ -52,13 +52,10 @@ void encryptData_01(char *data, int datalength)
 		mov bl, dl
 		pop ecx
 		
-
-
-		
 		// (#C) nibble rotate left 1 
-		mov al, bl
+		mov dl, bl
 		and bl, 0x0f  // bl now contains lower half of its original bits
-		and dl, 0xf0  // al now contains upper half of bl's original bits
+		and dl, 0xf0  // dl now contains upper half of bl's original bits
 		// rotate upper nibble left 1
 		rcl dl, 1
 		lahf
@@ -78,8 +75,6 @@ void encryptData_01(char *data, int datalength)
 		// combine nibbles back into bl byte
 		or bl, dl 
 		
-
-
 		// (#A) code table swap
 		
 		mov al, bl
