@@ -21,28 +21,25 @@ void decryptData_01(char *data, int sized)
 		mov dword ptr[ebp - 8], 0x0000 // clearing all 4 bytes of memory
 		mov	word ptr[ebp - 8], ax // storing index at ebp - 8
 
-		xor ecx, ecx  // set ecx to dataLength
+		xor ecx, ecx 
 
 		LOOP1:
-		mov esi, [ebp + 8] // preserving data address
+		mov esi, [ebp + 8] // data address
 		add esi, ecx // add x to data to get data[x]
-
-		lea ebx, gkey // set ebx to address gkey
-		add ebx, [ebp - 8]  // gkey[index]
-		mov ebx, [ebx]
-			
+		mov eax, [esi] // copy data[x] address to eax 
+		
 		// (#A) code table swap
+		mov ebx, eax
+		xor eax, eax
 		mov al, bl
-		xor ebx, ebx
-		mov bl, al
-		lea eax, gEncodeTable
-		add eax, ebx
-		mov eax, [eax]
-		mov bl, al
+		lea ebx, gDecodeTable
+		add ebx, eax
+		mov ebx, [ebx]
+		mov al, bl
 
 		// (#C) nibble rotate right 1 
-		mov dl, bl
-		and bl, 0x0f  // bl now contains lower half of its original bits
+		mov dl, al
+		and al, 0x0f  // bl now contains lower half of its original bits
 		and dl, 0xf0  // dl now contains upper half of bl's original bits
 		// rotate upper nibble right 1
 		shr dl, 4
@@ -53,34 +50,37 @@ void decryptData_01(char *data, int sized)
 		rcr dl, 1
 		and dl, 0xF0
 		// rotate lower nibble right 1
-		rcr bl, 1
+		rcr al, 1
 		lahf
-		ror bl, 3
+		ror al, 3
 		sahf
-		rcr bl, 1
-		shr bl, 4
-		and bl, 0x0F
+		rcr al, 1
+		shr al, 4
+		and al, 0x0F
 		// combine nibbles back into bl byte
-		or bl, dl
+		or al, dl
 
 		// (#B) reverse bit order
 		push ecx
 		mov ecx, 8
 		xor dl, dl
 		REVERSEBITLOOP:
-		rcr bl, 1
+		rcr al, 1
 		rcl dl, 1
 		LOOP REVERSEBITLOOP
-		mov bl, dl
+		mov al, dl
 		pop ecx
 
 		// (#E) rotate 3 bits RIGHT
-		ror bl, 3
+		ror al, 3
 
 		// (#D) invert bits 1,5,6 
-		xor bl, 0x62
+		xor al, 0x62
 
-		mov eax, [esi] // copy data[x] address to eax for use in xor
+		lea ebx, gkey // set ebx to address gkey
+		add ebx, [ebp - 8]  // gkey[index]
+		mov ebx, [ebx]
+		
 		xor bl, al // xor data[x] with gKey[index]
 
 		mov[esi], bl // data[x] = data[x] ^ gKey[index];

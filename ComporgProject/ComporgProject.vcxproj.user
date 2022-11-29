@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>-d C:\Projects\Computer-Organization-Project\1_testASCII.txt.enc -k C:\Projects\Computer-Organization-Project\Key.dat -p SECRET -r 1 -x DEBCA</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-e C:\Projects\Computer-Organization-Project\1_testASCII.txt -k C:\Projects\Computer-Organization-Project\Key.dat -p SECRET -r 1 -x DEBCA</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

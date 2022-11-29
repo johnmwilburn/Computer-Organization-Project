@@ -37,11 +37,11 @@ void encryptData_01(char *data, int datalength)
 
 		// (#D) invert bits 1,5,6 
 		xor bl, 0x62 
+
 		// (#E) rotate 3 bits LEFT
 		rol bl, 3  
 		
 		// (#B) reverse bit order
-		
 		push ecx
 		mov ecx, 8
 		xor dl, dl
@@ -51,8 +51,8 @@ void encryptData_01(char *data, int datalength)
 		LOOP REVERSEBITLOOP
 		mov bl, dl
 		pop ecx
-		
-		// (#C) nibble rotate left 1 
+
+		// (#C) nibble rotate left 1
 		mov dl, bl
 		and bl, 0x0f  // bl now contains lower half of its original bits
 		and dl, 0xf0  // dl now contains upper half of bl's original bits
@@ -74,17 +74,15 @@ void encryptData_01(char *data, int datalength)
 		and bl, 0x0F
 		// combine nibbles back into bl byte
 		or bl, dl 
-		
+
 		// (#A) code table swap
-		
-		mov al, bl
+		mov eax, ebx
 		xor ebx, ebx
 		mov bl, al
 		lea eax, gEncodeTable
 		add eax, ebx
 		mov eax, [eax]
 		mov bl, al
-		
 		
 		mov [esi], bl // data[x] = data[x] ^ gKey[index];
 
@@ -118,7 +116,7 @@ int encryptData(char *data, int dataLength)
 
 		// simple example that xors 2nd byte of data with 14th byte in the key file
 		lea esi,gkey				// put the ADDRESS of gkey into esi
-		mov esi,gptrKey;			// put the ADDRESS of gkey into esi (since *gptrKey = gkey)
+		mov esi,gptrKey;			// put the ADDRESS of gkey into esi (since *gptrKey = gkey)d
 
 		lea	esi,gPasswordHash		// put ADDRESS of gPasswordHash into esi
 		mov esi,gptrPasswordHash	// put ADDRESS of gPasswordHash into esi (since unsigned char *gptrPasswordHash = gPasswordHash)
