@@ -21,6 +21,15 @@ void encryptData_01(char *data, int datalength)
 		mov dword ptr [ebp - 8], 0x0000 // clearing all 4 bytes of memory
 		mov	word ptr [ebp - 8], ax // storing index at ebp - 8
 
+		mov	ah, gPasswordHash[2]
+		mov	al, gPasswordHash[3]
+		cmp ax, 0x0000
+		JNE NO_FFFF
+		mov ax, 0xFFFF
+		NO_FFFF:
+		mov dword ptr[ebp - 12], 0x0000
+		mov	word ptr[ebp - 12], ax // hop_count
+
 		xor ecx, ecx
 		
 		LOOP1:
@@ -28,12 +37,22 @@ void encryptData_01(char *data, int datalength)
 		add esi, ecx // add x to data to get data[x]
 		mov eax, [esi] // copy data[x] address to eax for use in xor
 		
-		
 		lea ebx, gkey // set ebx to address gkey
 		add ebx, [ebp - 8]  // gkey[index]
+		nop
 		mov ebx, [ebx]
 		
 		xor bl, al // xor data[x] with gKey[index]
+
+		nop
+		mov eax, [ebp-8]
+		add eax, [ebp-12]
+		cmp eax, 65537d
+		JL NO_RESET
+		sub eax, 65537d
+		NO_RESET:
+		mov [ebp-8], eax
+		
 
 		// (#D) invert bits 1,5,6 
 		xor bl, 0x62 
@@ -95,52 +114,4 @@ void encryptData_01(char *data, int datalength)
 
 	return;
 } // encryptData_01
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-// EXAMPLE code to to show how to access global variables
-int encryptData(char *data, int dataLength)
-{
-	int resulti = 0;
-
-	gdebug1 = 0;				// a couple of global variables that could be used for debugging
-	gdebug2 = 0;				// also can have a breakpoint in C code
-
-	// You can not declare any local variables in C, but should use resulti to indicate any errors
-	// Set up the stack frame and assign variables in assembly if you need to do so
-	// access the parameters BEFORE setting up your own stack frame
-	// Also, you cannot use a lot of global variables - work with registers
-
-	__asm {
-		// you will need to reference some of these global variables
-		// (gptrPasswordHash or gPasswordHash), (gptrKey or gkey), gNumRounds
-
-		// simple example that xors 2nd byte of data with 14th byte in the key file
-		lea esi,gkey				// put the ADDRESS of gkey into esi
-		mov esi,gptrKey;			// put the ADDRESS of gkey into esi (since *gptrKey = gkey)d
-
-		lea	esi,gPasswordHash		// put ADDRESS of gPasswordHash into esi
-		mov esi,gptrPasswordHash	// put ADDRESS of gPasswordHash into esi (since unsigned char *gptrPasswordHash = gPasswordHash)
-
-		mov al,byte ptr [esi]				// get first byte of password hash
-		mov al,byte ptr [esi+4]				// get 5th byte of password hash
-		mov ebx,2
-		mov al,byte ptr [esi+ebx]			// get 3rd byte of password hash
-		mov al,byte ptr [esi+ebx*2]			// get 5th byte of password hash
-
-		mov ax,word ptr [esi+ebx*2]			// gets 5th and 6th bytes of password hash ( gPasswordHash[4] and gPasswordHash[5] ) into ax
-		mov eax,dword ptr [esi+ebx*2]		// gets 4 bytes, as in:  unsigned int X = *( (unsigned int*) &gPasswordHash[4] );
-
-		mov al,byte ptr [gkey+ebx]			// get's 3rd byte of gkey[] data
-
-		mov al,byte ptr [gptrKey+ebx]		// THIS IS INCORRECT - will add the address of the gptrKey global variable (NOT the value that gptrKey holds)
-
-		mov al,byte ptr [esi+0xd];			// access 14th byte in gkey[]: 0, 1, 2 ... d is the 14th byte
-		mov edi,data				// Put ADDRESS of first data element into edi
-		xor byte ptr [edi+1],al		// Exclusive-or the 2nd byte of data with the 14th element of the keyfile
-									// NOTE: Keyfile[14] = 0x21, that value changes the case of a letter and flips the LSB
-									// Capital "B" = 0x42 becomes lowercase "c" since 0x42 xor 0x21 = 0x63
-	}
-
-	return resulti;
-} // encryptData
 
