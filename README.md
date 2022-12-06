@@ -1,3 +1,8 @@
+### Comporg Project Fall 2022
+# Description
+x86 Assembly Encryption / Decryption program involving use of the stack, bitwise operations, loops, and register management
+
+
 ## TO USE:
 # Cloning
 * Create a folder named C:\Projects
