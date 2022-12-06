@@ -1,6 +1,6 @@
-﻿  DecryptData_Initial.cpp
+﻿  CryptoMain_Student.cpp
 C:\Projects\Computer-Organization-Project\ComporgProject\Main.h(14,1): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
-C:\Projects\Computer-Organization-Project\ComporgProject\DecryptData_Initial.cpp : message : see previous definition of '_CRT_SECURE_NO_WARNINGS'
+C:\Projects\Computer-Organization-Project\ComporgProject\CryptoMain_Student.cpp : message : see previous definition of '_CRT_SECURE_NO_WARNINGS'
   EncryptData_Initial.cpp
 C:\Projects\Computer-Organization-Project\ComporgProject\Main.h(14,1): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
 C:\Projects\Computer-Organization-Project\ComporgProject\EncryptData_Initial.cpp : message : see previous definition of '_CRT_SECURE_NO_WARNINGS'

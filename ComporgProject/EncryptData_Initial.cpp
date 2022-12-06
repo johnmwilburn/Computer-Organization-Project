@@ -12,13 +12,10 @@ void encryptData_01(char *data, int datalength)
 {
 	__asm
 	{
-		// Starting_index[round] = gPasswordHash[0+round*4] * 256 + gPasswordHash[1+round*4];
-		// index = Starting_index[round];
-		// [ebp-8] <==> index
 		mov	dword ptr[ebp - 4], 0x0000 // round
 		mov	ah, gPasswordHash[0] // gPasswordHash[0+round*4] * 256
 		mov	al, gPasswordHash[1] // gPasswordHash[1+round*4]
-		mov dword ptr [ebp - 8], 0x0000 // clearing all 4 bytes of memory
+		mov dword ptr [ebp - 8], 0x0000
 		mov	word ptr [ebp - 8], ax // storing index at ebp - 8
 
 		mov	ah, gPasswordHash[2]
@@ -44,7 +41,6 @@ void encryptData_01(char *data, int datalength)
 		
 		xor bl, al // xor data[x] with gKey[index]
 
-		nop
 		mov eax, [ebp-8]
 		add eax, [ebp-12]
 		cmp eax, 65537d
