@@ -1,16 +1,16 @@
-### Comporg Project Fall 2022
-# Description
+# Comporg Project Fall 2022
+## Description
 x86 Assembly Encryption / Decryption program involving use of the stack, bitwise operations, loops, and register management
 
 
 ## TO USE:
-# Cloning
+### Cloning
 * Create a folder named C:\Projects
 * Open CMD
 * type 'cd C:\Projects'
 * type 'git clone https://github.com/johnmwilburn/Computer-Organization-Project'
 
-# Configuration
+### Configuration
 * Open the cloned solution file with Visual Studio 2019
 * Go to Project > ComporgProject Properties > Debugging > Command Arguments
 * Ensure that the first option is set to -d or -e depending on if you want to decrypt or encrypt
