@@ -9,7 +9,6 @@ x86 Assembly Encryption / Decryption program involving use of the stack, bitwise
 * Open CMD
 * type 'cd C:\Projects'
 * type 'git clone https://github.com/johnmwilburn/Computer-Organization-Project'
-* [Make your git credentials work somehow until the clone works properly.]
 
 # Configuration
 * Open the cloned solution file with Visual Studio 2019
